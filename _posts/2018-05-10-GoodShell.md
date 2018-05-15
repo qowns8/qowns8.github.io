@@ -1,10 +1,12 @@
 ---
 layout: post
-title: 멋있는 명령어 모음
+title: 멋있는 명령어 모음 (작성중)
 comments: true
 tags:
+- 리눅스
 - 쉘
 - 명령어
+- 개발자 간지
 ---
 
 # 멋있는 명령어 모음
