@@ -1,6 +1,10 @@
 ---
 layout: post
 title: 멋있는 명령어 모음
+comments: true
+tags:
+- 쉘
+- 명령어
 ---
 
 # 멋있는 명령어 모음
