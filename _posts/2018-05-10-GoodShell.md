@@ -1,7 +1,6 @@
 ---
 layout: post
 title: 멋있는 명령어 모음 (작성중)
-comments: true
 tags:
 - 리눅스
 ---

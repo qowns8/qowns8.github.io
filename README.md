@@ -1,57 +1,54 @@
-# Soot Spirits Jekyll Theme
+Jekyll Xixia
+============
 
-Soot Spirits is a responsive mobile ready lightweight two column Jekyll theme made with Bulma CSS. It is a great template for simple personal blogs with focus on typography.
+* Get it from [github](https://github.com/zxixia/jekyll-xixia).
+* See the [live demo](http://zxixia.github.io/jekyll-xixia/).
+* See it [in action on my own blog](http://xixia.info/).
 
-![mobile](tmp/mobile.png)
+A simple and clean Jekyll theme using [bootstrap](http://getbootstrap.com)
+(not to be confused with jekyll-bootstrap) that's easy to modify and very
+modular in component and element reuse.
 
-The text is made beautiful with combination of [League Gothic](https://www.fontsquirrel.com/fonts/league-gothic), [Roboto](https://fonts.google.com/specimen/Roboto) and [Open Sans](https://fonts.google.com/specimen/Open+Sans). Now who doesn't love them. 
+The theme works well on mobile phones, using a collapsable nav bar and hiding the
+sidebar. The links pane in the sidebar is available on mobile through the nav menu,
+and you can do the same thing for any other sections added to the sidebar.
 
-![text](tmp/langslide.gif)
+Don't forget to occassionally merge against my upstream repository so you can get
+the latest changes. Pull requests are encouraged and accepted!
 
-### Demo
-[sootspirits.github.io](https://sootspirits.github.io)
+Preview
+=======
+![Xixia](/assets/images/preview.png)
 
-### Some Good Features
+License
+=======
 
-- Fully mobile ready
-- Beautiful typography
-- Two column layout suitable for a wide range of blogging habits
-- Fully customisable theme including the 'hello' text, quotes, nav items and sidebar widgets
+The content of this theme is distributed and licensed under a
+![License Badge](assets/images/cc_by_88x31.png)
+[Creative Commons Attribution 4.0 License](https://creativecommons.org/licenses/by/4.0/legalcode)
 
-### Screenshots
-##### Deskop browser (full width)
-![fullwidth](tmp/fullwidth.png)
+    This license lets others distribute, remix, tweak, and build upon your work,
+    even commercially, as long as they credit you for the original creation. This
+    is the most accommodating of licenses offered. Recommended for maximum
+    dissemination and use of licensed materials.
 
-##### Tablet browser (iPad)
-![tab](tmp/ipad.png)
+In other words: you can do anything you want with this theme on any site, just please
+provide a link to [the original theme on github](https://github.com/zxixia/jekyll-xixia)
+so I get credit for the original design. Beyond that, have at it!
 
-##### Mobile browser (320px and greater)
-![mobile](tmp/mobile.png)
+Thanks
+======
 
-##### Hamburger menu toggle
-![hamburger](tmp/hamburger.gif)
+1，[Jekyll][jekyll-url]
 
-##### Basic navigation and footer
-![navi](tmp/navi.gif)
+2，[Bootstrap][bootstrap-url]
 
-### Theme Usage
+3，[Github][github-url]
 
-- [Get started](https://jekyllrb.com/docs/installation/) with having the necessary tools set up
-- Download the zip of this project or simple clone it
-- Delete the ```tmp/``` directory and any sample ```_posts``` 
-- Customize the variables in ```_config.yml``` file such that it reflects your information. Similarly, change the disqus username (or remove it altogether).
-- Replace footer links in the ```_layouts/default.html``` file with yours.
-- Replace the ```site:example.com``` in ```assets/js/custom.js``` with your site's address.
+4，[Jekyll Clean Theme][Jekyll-Clean-Theme-url]
 
-### Credits
-- [Codepen hi-im-si](http://codepen.io/hi-im-si/pen/DHoup) for the header 'hello' typewriter text
-- [Bulma CSS](bulma.io/)
-- [Jekyll](https://jekyllrb.com)
-- [Github](https://github.com)
-
-### Licence
-MIT
-
-
-### What's up with the name?
-I was watching [My Neighbour Totoro](https://en.wikipedia.org/wiki/Susuwatari) while developing :-)
+[jekyll-url]: http://jekyllrb.com/
+[bootstrap-url]: http://getbootstrap.com/
+[github-url]: https://github.com/
+[Jekyll-Clean-Theme-url]: https://github.com/scotte/jekyll-clean
+[xixia-url]: http://xixia.info/
