@@ -1,0 +1,1176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Willy</title>
+		<description>우리는 무엇인가를 진정으로 사랑한다면 그것을 소유하지 않아도 행복할 수 있다. 같은 하늘 아래 어딘가에 그것이 있다는 그 사실만으로도 가슴이 뛸 수 있는 것이다 - 철학 영화를 캐스팅 하다</description>
+		<link>http://localhost:4000</link>
+		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>스칼라주석</title>
+				<description>&lt;h1 id=&quot;스칼라-주석-가이드&quot;&gt;스칼라 주석 가이드&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;scaladoc&quot;&gt;scaladoc&lt;/h2&gt;
+&lt;p&gt;intelliJ에서 스칼라 주석을 통한 &lt;em&gt;scalaDocs&lt;/em&gt;을 만드는 기능이 있다.&lt;/p&gt;
+
+&lt;p&gt;상단 -&amp;gt; tool -&amp;gt; Generate scaladoc -&amp;gt; 각각 설정 후 ok 버튼&lt;/p&gt;
+
+&lt;h2 id=&quot;docs를-만들기-위한-태그들&quot;&gt;docs를 만들기 위한 태그들&lt;/h2&gt;
+&lt;p&gt;https://docs.scala-lang.org/overviews/scaladoc/for-library-authors.html&lt;/p&gt;
+
+&lt;h2 id=&quot;주석-예시들&quot;&gt;주석 예시들&lt;/h2&gt;
+
+&lt;p&gt;다음 예시들은 scala.util과 scala 공식문서를 발취하고 참조했다&lt;/p&gt;
+
+&lt;h2 id=&quot;예시&quot;&gt;예시&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    /** The empty list.
+     *
+     *  @author  Martin Odersky
+     *  @version 1.0, 15/07/2003
+     *  @since   2.8
+     */
+    @SerialVersionUID(0 - 8256821097970055419L)
+    case object Nil extends List[Nothing] {
+      override def isEmpty = true
+      override def head: Nothing =
+        throw new NoSuchElementException(&quot;head of empty list&quot;)
+      override def tail: List[Nothing] =
+        throw new UnsupportedOperationException(&quot;tail of empty list&quot;)
+      // Removal of equals method here might lead to an infinite recursion similar to IntMap.equals.
+      override def equals(that: Any) = that match {
+        case that1: scala.collection.GenSeq[_] =&amp;gt; that1.isEmpty
+        case _ =&amp;gt; false
+      }
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;object&quot;&gt;object&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    /** Factory for [[mypackage.Person]] instances. */
+    object Person {
+      /** Creates a person with a given name and age.
+       *
+       *  @param name their name
+       *  @param age the age of the person to create
+       */
+      def apply(name: String, age: Int) = {}
+    
+      /** Creates a person with a given name and birthdate
+       *
+       *  @param name their name
+       *  @param birthDate the person's birthdate
+       *  @return a new Person instance with the age determined by the
+       *          birthdate and current date.
+       */
+      def apply(name: String, birthDate: java.util.Date) = {}
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;package&quot;&gt;package&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;package&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;/**&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Provides&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dealing&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;complex&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Also&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;provides&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;implicits&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;converting&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;`.&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Overview&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;==&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;complex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Complex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]],&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;so&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;If&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;you&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;complex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComplexConversions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;you&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;can&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;more&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;directly&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;*/&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;complex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;constructor&quot;&gt;@constructor&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    /** A person who uses our application.
+     *
+     *  @constructor create a new person with a name and age.
+     *  @param name the person's name
+     *  @param age the person's age in years
+     */
+    class Person(name: String, age: Int) {
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;autor&quot;&gt;@autor&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//@author 만든사람
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;version&quot;&gt;@version&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//@version 버전 날짜
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;since&quot;&gt;@since&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//@since 언제부터사용했는지
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;param&quot;&gt;@param&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//@param 변수이름 설명
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;tparam&quot;&gt;@tparam&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//@tparam T curring에 사용되는 파라미터 설명(T타입 인자)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;returns&quot;&gt;Returns&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/** Returns `true` if this value is less than or equal to x, `false` otherwise. */
+def &amp;lt;=(x: Byte): Boolean
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;example&quot;&gt;@example&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    	  /**
+       *  @example }
+       */
+      override def slice(from: Int, until: Int): List[A] = {
+        val lo = scala.math.max(from, 0)
+        if (until &amp;lt;= lo || isEmpty) Nil
+        else this drop lo take (until - lo)
+      }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;익명함수의-경우&quot;&gt;익명함수의 경우&lt;/h2&gt;
+
+&lt;p&gt;가끔 익명함수에 주석을 달게될수 있으나 그런 경우 &lt;em&gt;intellij&lt;/em&gt;에서는 밑줄을 쳐준다.
+예를 들면  &lt;em&gt;scalatra&lt;/em&gt; 에서 각 API URL들… get(){} 형식의 servlet에 구현한 것들은 익명함수를 호출하는 것이므로 주석을 달아도 빨간줄이 생기고 docs가 생성되지 않는다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;      /**
+       * ---
+       * @param..
+       * @param..
+       */
+      get (&quot;/&quot;) {
+
+        .
+        .
+        .
+        }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+				<pubDate>Wed, 30 May 2018 00:00:00 +0900</pubDate>
+				<link>http://localhost:4000/2018/05/30/scalaRemark.html</link>
+				<guid isPermaLink="true">http://localhost:4000/2018/05/30/scalaRemark.html</guid>
+			</item>
+		
+			<item>
+				<title>배포/테스트 자동화 2</title>
+				<description>&lt;p&gt;회사 기술블로그에 제가 올린 글을 다시 가져왔습니다.
+출처: https://madup-inc.github.io/2018/05/29/travis2.html&lt;/p&gt;
+
+&lt;p&gt;안녕하세요 1년차 개발자 윌리입니다, 배포자동화 경험담을 포스팅합니다.
+전편이 실패담이면 이번에는 어떻게 적용했는지 가 주요 내용입니다. 
+—&lt;/p&gt;
+
+&lt;h2 id=&quot;1편-tl-dr&quot;&gt;1편 TL; DR&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins CI&lt;/code&gt; -&amp;gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;Circle CI&lt;/code&gt; -&amp;gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS Pipeline&lt;/code&gt; 순으로 한 번씩 사용했습니다.&lt;/p&gt;
+
+&lt;p&gt;‘고등학교 때 리눅스 잘할껄’ 하고 눈물 흘리며 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis CI&lt;/code&gt;를 사용하기로 했습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;travis-ci&quot;&gt;Travis CI&lt;/h2&gt;
+
+&lt;h3 id=&quot;캐시-빌드-배포&quot;&gt;캐시, 빌드, 배포&lt;/h3&gt;
+
+&lt;p&gt;sbt 사이트에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis CI&lt;/code&gt; 매뉴얼이 있어 캐싱과 빌드까지는 별다른 어려움이 없었습니다.
+캐시를 위한 디렉토리만 지정해주면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;[https://www.scala-sbt.org/1.0/docs/Travis-CI-with-sbt.html]&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;계속 겪어온 AWS Elastic Beanstalk과 연동하는 문제 역시 Travis에서 지원해주는 배포 툴 중 하나이기에 딱 배포하는 것 까지는 문제가 없었습니다. 
+도중에 배포는 잘되지만 엉뚱한 S3 경로에 들어가는 실수를 하긴 했지만 &lt;code class=&quot;highlighter-rouge&quot;&gt;bucket_path&lt;/code&gt;를 지정해서 해결했습니다.&lt;/p&gt;
+
+&lt;p&gt;[https://docs.travis-ci.com/user/deployment/elasticbeanstalk/]&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  deploy:
+    skip_cleanup: true
+    provider: elasticbeanstalk
+    access_key_id: $ACESS_KEY_ID #aws access key
+    secret_access_key:
+      secure: $SECRET_ACESS_KEY #aws secret key
+    region: &quot;ap-northeast-2&quot;
+    app: $APP_NAME # eb 앱이름
+    env: $ENV_NAME # eb 환경이 여러개일때 지정
+    bucket_name: $EB_BUCKET # S3 버킷이름 '/'가 들어가면 에러
+    zip_file: $TARGET #산출물
+    bucket_path: $BUCKET #버킷안에서 경로
+    on:
+      repo: $REPOSITORY # GitHub 저장소
+      branch: $BRANCH #브랜치
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;몇 가지 헷갈렸던 옵션들만 주석으로 기재합니다.&lt;/p&gt;
+
+&lt;p&gt;이렇게 하면 일단 배포는 되지만 문제가 생겼습니다. S3에 앱 이름이 이상하게 되어있는 걸 발견했습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;travis-e797dccf4be4d459b110c7585ebc83860a2f4f6f-1524574195.zip&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;결국 제가 앱 이름을 지정하는 방법을 찾다가 간단한? 쉘 코드를 짜서 앱 이름으로 쓰는 환경변수를 바꾸기로 했습니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;before_deploy:
+  - export ARTIFACT_PRE=$(echo $TRAVIS_REPO_SLUG | sed  s_^.*/__)
+  - export ARTIFACT_NAME=app-$(git describe --tags)
+  - export ELASTIC_BEANSTALK_LABEL=$(echo $ARTIFACT_NAME)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;슬랙연동&quot;&gt;슬랙연동&lt;/h3&gt;
+
+&lt;p&gt;슬랙연동은해줄 일이 정말 없습니다. 슬랙에서 APP을 추가해서 토큰을 받아온 후 그 토큰을 yml에 기재하면 끝입니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;notifications:
+  slack:
+    rooms:
+      - 슬랙팀:토큰#tech_dev_travis
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;만약에 여러가지 방에 연동하거나 다른 슬랙메세지를 직접 고치고 싶다면 다음 링크를 참조하세요&lt;/p&gt;
+
+&lt;p&gt;[https://docs.travis-ci.com/user/notifications/]&lt;/p&gt;
+
+&lt;h3 id=&quot;테스트&quot;&gt;테스트&lt;/h3&gt;
+
+&lt;p&gt;아직도 해결이 안된 부분이고 가장 힘든 부분입니다.
+revenue 백앤드 코드의 대부분은 DB 작업인데 (가장 복잡하고 최근에 리팩토링한 부분도 DB 작업을 대신해주는 인터페이스)
+DB는 몇몇 EC2만 접속이 가능해서 SSH 터널링을해야 API 테스트가 가능했습니다.&lt;/p&gt;
+
+&lt;p&gt;이 과정에서 왜 문제가 일어나는지도 몰랐고 해결방법도 모르고 결국 알아냈지만 또 문제가 생겨 쉘만 잔뜩 만들었습니다.&lt;/p&gt;
+
+&lt;p&gt;대략적으로 겪었던 과정은 다음과 같습니다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;db 접속 확인을 위해 테스트 후 결과를 저장하고 DB 커넥션 관련 에러만 보여주는 쉘을 작성&lt;/li&gt;
+  &lt;li&gt;제이슨이 SSH로 접속하는 방법을 알려줌&lt;/li&gt;
+  &lt;li&gt;신디와 같이 터널링에 사용할 Key 저장&lt;/li&gt;
+  &lt;li&gt;터널링 적용&lt;/li&gt;
+  &lt;li&gt;터널링을 백그라운드에서 돌려야 된다는 것을 깨달음&lt;/li&gt;
+  &lt;li&gt;로컬과 다르게 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;에서는 ‘&amp;amp;’를 이용해 백그라운드에서 프로세스를 돌리기가 어려움&lt;/li&gt;
+  &lt;li&gt;screen, tmux 등의 명령어로 백그라운드 실행을 하려 했으나 화면 전환은 키보드로만 가능하여 테스트는 보류됨&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;후기&quot;&gt;후기&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;프론트 개발자 신디의 선호&lt;/li&gt;
+  &lt;li&gt;테스트 적용 중에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;가 다른 CI에 비해 커스텀하기 불편한 점을 느낌&lt;/li&gt;
+  &lt;li&gt;S3에 파일이 .war가 아니라 .zip으로 들어가게 찜찜함&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;위 3가지 때문에 제이슨은 저에게 다시 한 번 Circle CI로 자동화를 해보는것을 제의했습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;는 비교적 쉽고 문서와 지원되는 기술이 정말 잘 되어있습니다. 단점으로는 리눅스처럼 쓰는 데는 약간의 무리가 따릅니다.
+구관이 명관이라더니… &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins CI&lt;/code&gt;가 더 좋은 점도 있었습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;다시-circle-ci&quot;&gt;다시 Circle CI&lt;/h2&gt;
+
+&lt;h3 id=&quot;yml-작성&quot;&gt;yml 작성&lt;/h3&gt;
+
+&lt;p&gt;이미 한 번 해본거니 1,2일안에 끝날줄 알았지만 실수를 많이 해서 제이슨의 캐리를 받았습니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+
+    steps:
+      - run:
+          name: Installing Deployment Dependencies
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get -y install python-pip python-dev build-essential
+            sudo pip install awscli awsebcli --upgrade
+
+      - checkout
+
+      - run:
+          name: Build Package
+          command: sbt package
+
+      - run:
+          name: Package Deployment
+          command: eb deploy
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;몇몇 부분들과 잘안된 캐시 부분은 제외한 config.yml 입니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;실수들&quot;&gt;실수들&lt;/h3&gt;
+
+&lt;p&gt;굉장히 간단한 yml이지만 엄청 많이 실수를 남발했습니다. 반성하는 의미에서 적습니다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;awscli가 아니라 awseb 만 설치해 버림&lt;/li&gt;
+  &lt;li&gt;1번을 모른 상태에서 HOME 디렉토리에 .aws 디렉토리와 파일이 없는걸 깨닫고 고민함&lt;/li&gt;
+  &lt;li&gt;환경변수로 aws 키를 넣어두고 쉘로 .aws 디렉토리와 파일 만듬&lt;/li&gt;
+  &lt;li&gt;제이슨의 지적으로 awscli를 설치하고 설정에 넣어둔 키가 잘들어가는 것을 확인함&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;후기-1&quot;&gt;후기&lt;/h3&gt;
+
+&lt;p&gt;확실히 &lt;code class=&quot;highlighter-rouge&quot;&gt;Circle CI&lt;/code&gt;가 빠르긴 빨랐습니다.&lt;/p&gt;
+
+&lt;p&gt;테스트도 없고 여러가지 언어나 환경에서 빌드할 일도 없는 프로젝트를 굳이 &lt;code class=&quot;highlighter-rouge&quot;&gt;Circle CI&lt;/code&gt;로 해야 되냐는 고민이 생겼습니다.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Circle CI&lt;/code&gt;에 장점은 도커환경 위에 리눅스처럼 여러가지를 커스텀 할 수 있고 다양한 workflow를 쓸 수 있다 입니다. 단점은
+리눅스를 잘해야 되는데 이럴거면 굳이 안써도 된다는 생각이 들었습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;travis-ci-vs-circle-ci&quot;&gt;Travis CI VS Circle CI&lt;/h2&gt;
+
+&lt;h3 id=&quot;현기증나니깐-뭐-하나-정해-써요&quot;&gt;현기증나니깐 뭐 하나 정해 써요&lt;/h3&gt;
+&lt;p&gt;두 가지 CI 사용해 매번 푸쉬할 때 마다 두 중 하나를 수동으로 정지시키는 고생을 하다가
+제이슨과 신디에게 빨리 하나만 정해서 쓰자고 재촉해서 결국 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis CI&lt;/code&gt;를 사용하기로 했습니다.
+저희 프로젝트가 복잡하지 않은 점과 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;를 이미 결제한게 큰 영향을 끼친 것 같습니다.&lt;/p&gt;
+
+&lt;p&gt;그 후에는 master 브랜치 설정을 추가해서 배포자동화를 완료했습니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;branches:
+  only:
+    - develop
+    - master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;어떤-ci를-어떻게-쓰고-싶은가&quot;&gt;어떤 CI를 어떻게 쓰고 싶은가?&lt;/h3&gt;
+
+&lt;p&gt;이번에 4가지 CI로 5번의 배포자동화를 해보면서 각 CI를 어떻게 쓰고 싶냐고 물어보면 이렇게 쓰고 싶습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins CI&lt;/code&gt; : 정부과제, 대기업 외주, 개인 프로젝트&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Travis CI&lt;/code&gt; : 오픈소스, 여럿이서 프로젝트 할 때&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AWS Pipeline&lt;/code&gt; : 고객이 AWS를 고집할 때&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Circle CI&lt;/code&gt; : 개인 프로젝트, 무료로 쓰고 싶을 때&lt;/p&gt;
+
+&lt;p&gt;- 이건 회사 의견과 상관없는 &lt;strong&gt;개인적&lt;/strong&gt; 생각입니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;후기-2&quot;&gt;후기&lt;/h2&gt;
+
+&lt;p&gt;배포자동화를 거의 2달을 하면서 제일 많이 한 생각은 ‘고등학교 때 소장님 수업(리눅스)좀 많이 물어볼 걸’ 입니다.
+서버 운영과 배포 자동화, 임베디드에서는 리눅스를 정말 잘 해야한다고 느꼈습니다.&lt;/p&gt;
+
+&lt;p&gt;그 다음으로 드는 생각은 제이슨에게 감사함을 느낍니다.
+아마 제이슨이 없었면 제 리눅스 실력으로 2달은 더 걸렸을 것 입니다.&lt;/p&gt;
+
+</description>
+				<pubDate>Tue, 29 May 2018 00:00:00 +0900</pubDate>
+				<link>http://localhost:4000/2018/05/29/travis2.html</link>
+				<guid isPermaLink="true">http://localhost:4000/2018/05/29/travis2.html</guid>
+			</item>
+		
+			<item>
+				<title>멋있는 명령어 모음 (작성중)</title>
+				<description>&lt;h1 id=&quot;멋있는-명령어-모음&quot;&gt;멋있는 명령어 모음&lt;/h1&gt;
+
+&lt;p&gt;이 글은 콘솔창을 이용해 뭔가 있어보이거나 해커의 느낌을 내고 싶은 일반인 혹은 일하는 느낌을 주고 싶은 개발자를 위해 작성되었습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;tree&quot;&gt;tree&lt;/h2&gt;
+
+&lt;h3 id=&quot;설명&quot;&gt;설명&lt;/h3&gt;
+
+&lt;p&gt;윈도우 CMD 창에서 할수 있는 가장 멋있는 명령어 중 하나이다. 떠도는 이야기에 의하면 방송 같은 곳에 가끔 나오는 검은 창에 초록색 글자들이 주르륵 계속 내려가는 화면들이 tree 명령어 하나 친 화면이라는 이야기를 들은적 있다…
+실제로 친구중 한명이 방송국에서 취재를 왔는데 뭔가 보여줘야하니간 CMD에서 tree를 쳤다고 했다… 일반인이나 콘솔을 잘모르는 사람이 보기에 멋진 명령어긴하다.&lt;/p&gt;
+
+&lt;h3 id=&quot;원래-용도&quot;&gt;원래 용도&lt;/h3&gt;
+
+&lt;p&gt;tree 명령어는 디렉터리 구조를 볼때 사용되는 명령어이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;예시&quot;&gt;예시&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tree 
+tree ₩
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;주의사항&quot;&gt;주의사항&lt;/h3&gt;
+&lt;p&gt;모든 디렉토리를 출력하거나 쉘을 짜서 1초마다 계속 반복되게 하는것도 괜찮다. 다음은 그냥 짜본 쉘코드이다.
+개발자가 아니라면 메모장에 복사 붙여넣기한 다음 happyTree.sh 라는 제목으로 저장해서 실행하자&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;while [ 1 ] ; do
+	tree ~/
+	sleep 1
+done
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;제일중요한&lt;/em&gt; 건 tree 명령어를 &lt;em&gt;아는사람이&lt;/em&gt; 있다며 창피해질수가 있다…&lt;/p&gt;
+
+&lt;h3 id=&quot;linux-os-xmac에서-사용하는-방법&quot;&gt;linux, os x(Mac)에서 사용하는 방법&lt;/h3&gt;
+
+&lt;p&gt;윈도우에서는 기본적으로 tree 명령어가 내장되어있지만 리눅스와 맥에선 그렇지 않다… 그래도 이 어썸한 명령어를 쓰고 싶다면 직접 설치해서 사용하면된다.
+설치 방법은 다음 명령어를 따라쳐라&lt;/p&gt;
+
+&lt;p&gt;linux&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install tree
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;os x&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install tree
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;netstat&quot;&gt;netstat&lt;/h2&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;화면분할&quot;&gt;화면분할&lt;/h2&gt;
+
+&lt;h3 id=&quot;screen&quot;&gt;screen&lt;/h3&gt;
+
+&lt;h3 id=&quot;tmux&quot;&gt;tmux&lt;/h3&gt;
+
+&lt;h3 id=&quot;tmux-vs-screen&quot;&gt;tmux vs screen&lt;/h3&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;기타&quot;&gt;기타&lt;/h2&gt;
+
+&lt;p&gt;lolcat&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;windows를-위한-팁&quot;&gt;Windows를 위한 팁&lt;/h2&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;linux--mac-을-위한-팁&quot;&gt;linux + Mac 을 위한 팁&lt;/h2&gt;
+</description>
+				<pubDate>Thu, 10 May 2018 00:00:00 +0900</pubDate>
+				<link>http://localhost:4000/2018/05/10/GoodShell.html</link>
+				<guid isPermaLink="true">http://localhost:4000/2018/05/10/GoodShell.html</guid>
+			</item>
+		
+			<item>
+				<title>배포/테스트 자동화 1</title>
+				<description>&lt;p&gt;회사 기술블로그에 제가 올린 글을 다시 가져왔습니다.
+출처: https://madup-inc.github.io/2018/05/02/travis1.html&lt;/p&gt;
+
+&lt;p&gt;안녕하세요 1년차 개발자 윌리입니다. 매드업에서 사용하는 관리도구 revenue의 배포자동화 시행착오 경험담을 포스팅합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;배포자동화를-하는-이유&quot;&gt;배포자동화를 하는 이유&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;여러가지 환경과 서버에 배포할 때 유리하다.&lt;/li&gt;
+  &lt;li&gt;배포, 테스트에 드는 수작업이 줄어서 코딩에 집중할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;여러가지 환경, 서버에 수동으로 배포한다면 그 만큼 시간이 걸리지만 한번 자동화를 해놓으면 그런 수고가 사라집니다. 테스트도 마찬가지입니다. 예를들면 python 라이브러리를
+만들었는데 3.5, 3.6, 3.7 버전 전부 호환되는지를 테스트를 배포자동화를 한번 구축해놓으면 소스 commit 마다 할 수 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;배포자동화를 하기 이전에는 branch별로 AWS Elastic beanstalk에 config.yml을 수정하고 war 파일 만들고 EB deploy 명령으로 배포했습니다. 자잘하게 시간이 걸리고 실수의 여지도 있었지만 배포자동화를 한후에는
+commit push만 하면 서버에 반영되서 편해졌습니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;어떤걸-써야하나&quot;&gt;어떤걸 써야하나?&lt;/h2&gt;
+
+&lt;h3 id=&quot;후보&quot;&gt;후보&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Jenkins&lt;/li&gt;
+  &lt;li&gt;Circle CI&lt;/li&gt;
+  &lt;li&gt;AWS CodePipeline&lt;/li&gt;
+  &lt;li&gt;Travis CI&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;위 4가지를 사용해보았습니다. 각자 장단점이 있지만 결론부터 말하면 결국 Trvis를 사용했습니다.
+처음 자료 조사를 할 때는 다음 글을 참조했습니다.&lt;/p&gt;
+
+&lt;p&gt;https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;시행착오-1-jenkins&quot;&gt;시행착오 1 Jenkins&lt;/h2&gt;
+
+&lt;h3 id=&quot;시행착오-과정&quot;&gt;시행착오 과정&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;AWS에 프리티어로 EC2를 만든후 yum에 Jenkins를 &lt;strong&gt;추가해서&lt;/strong&gt; 설치&lt;/li&gt;
+  &lt;li&gt;SBT 설치&lt;/li&gt;
+  &lt;li&gt;젠킨스 파이프라인 작성 + Github 연동&lt;/li&gt;
+  &lt;li&gt;JVM 기반의 SBT와 Jenkins가 생각보다 메모리를 많이 사용해서 둘을 같이 사용하면 오버플로우가 발생해 EC2 볼륨을 키움&lt;/li&gt;
+  &lt;li&gt;서버배포를 위해 pip로 Elasticbeanstalk cli를 설치함&lt;/li&gt;
+  &lt;li&gt;Elasticbeanstalk 줄여서 EB를 pip로 설치해서 권한이 꼬임 Jenkins는 jenkins-user라는
+유저이고 EB는 ec2-user로 되어있었다&lt;/li&gt;
+  &lt;li&gt;Jenkins와 EB를 yum (같은 &lt;strong&gt;패키지 관리자&lt;/strong&gt;) 다시 설치하고 그래도 꼬여있는 권한은 chmod로 수정함&lt;/li&gt;
+  &lt;li&gt;EB config.yml을 설정하는 shell 작성&lt;/li&gt;
+  &lt;li&gt;배포자동화 성공&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;장단점&quot;&gt;장단점&lt;/h3&gt;
+
+&lt;p&gt;장점: 혼자 리눅스를 공부하기는 좋다, &lt;strong&gt;리눅스를 잘한다면&lt;/strong&gt; 다양한 커스터마이징이 가능함, 오픈소스이기에 무료&lt;/p&gt;
+
+&lt;p&gt;단점: 다양한 환경을 일일이 &lt;strong&gt;세팅하기가 힘들다&lt;/strong&gt;, 리눅스를 못한다면 끔찍한 야근각, 배포자동화를 위해 서버가 필요함(과금)&lt;/p&gt;
+
+&lt;p&gt;결론: jenkins 자체는 무료지만 &lt;strong&gt;서버는 유료&lt;/strong&gt; 리눅스사용에 미숙하고 개인 프로젝트가 아니라면 사용하는데 예매함&lt;/p&gt;
+
+&lt;h3 id=&quot;jenkins-사용-후기&quot;&gt;Jenkins 사용 후기&lt;/h3&gt;
+
+&lt;p&gt;고등학교 1학년 이후로 오랫만에 리눅스로 이것저것 삽질하는 경험 자체는 생각보다 재미있지만 회사 프로젝트로 Jenkins를
+쓰기에 시간이 너무 많이 들고 지속적인 서버관리가 필요했습니다. jenkins 자체도 무료지만 결국 서버비용이 들기에
+리눅스에 미숙한 제가하기는 시행착오와 시간소모가 너무 컸습니다.&lt;/p&gt;
+
+&lt;p&gt;Jenkins를 사용하는 친구들을 찾아보아도 다들 와우의 전설 리로이 젠킨스만 알려줬습니다… 저 같은 신입수준에서
+Jenkins를 사용해본 개발자는 적어서 조금 이라도 편하게 하려면 다른 CI를 사용해야합니다.&lt;/p&gt;
+
+&lt;p&gt;리이로이이~ 젠킨스!!!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;시행착오-2-circle-ci&quot;&gt;시행착오 2 Circle CI&lt;/h2&gt;
+
+&lt;h3 id=&quot;시행착오-과정-1&quot;&gt;시행착오 과정&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;테스트를 위해 Circle CI 무료 버전을 사용&lt;/li&gt;
+  &lt;li&gt;Circle CI 자료조사; &lt;strong&gt;Docker 기반&lt;/strong&gt;으로 환경을 구성하기에 &lt;strong&gt;Docker와 매우 흡사함&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;docker 참조해서 circle.yml 작성&lt;/li&gt;
+  &lt;li&gt;배포를 위해 pip로 EB cli룰 설치하는 코드를 yml에 추가&lt;/li&gt;
+  &lt;li&gt;EB의 config.yml을 만드는 쉘 작성&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+
+    working_directory: ~/repo
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
+    checkout:
+      post:
+        - git clone https://github.com/madup-inc/revenue-api
+        - git checkout develop
+
+    steps:
+      - checkout
+      - run: sbt package
+
+##### deploy 생략
+
+workflows:
+  version: 2
+  build_deploy:
+    jobs:
+      - build
+      - deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;장단점-1&quot;&gt;장단점&lt;/h3&gt;
+
+&lt;p&gt;장점: Jenkins의 비해 매우 쉬움, 설치해야될 패키지가 많을 수록 빠름, 도커기반, 클라우드 환경, 빌드 배포 테스트를 각 step 별로 나눠서 가능함&lt;/p&gt;
+
+&lt;p&gt;단점: 도커와 다른게 없으므로 그냥 서버에 도커로 배포자동화를 하는것과 무엇이 다른지 의문이 듬, AWS와의 연동은 가능하지만 불편함을 느낌&lt;/p&gt;
+
+&lt;p&gt;결론: 도커&lt;/p&gt;
+
+&lt;h3 id=&quot;circle-ci-사용-후기&quot;&gt;Circle CI 사용 후기&lt;/h3&gt;
+
+&lt;p&gt;빌드, 배포, 테스트를 각 step별로 할려면 Jenkins에서는 groovy코드를 짜야하고 Travis CI에서는 아직 베타 기능인데
+yml에서 간단하게 사용할 수 있는점이 좋있다. 하지만 AWS 중에 EB 와의 연동이 불편했고 도커와 다른점을 느끼기 힘들었다. 그래서 일단 다른 툴도 써보기로 했다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;시행착오-3-aws-codepipeline&quot;&gt;시행착오 3 AWS CodePipeline&lt;/h2&gt;
+
+&lt;h3 id=&quot;시행착오-과정-2&quot;&gt;시행착오 과정&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;사수인 제이슨이 먼저 pipeline을 사용함&lt;/li&gt;
+  &lt;li&gt;그 동안에 너무 고생을 많이 해서 제이슨의 yml을 참조함&lt;/li&gt;
+  &lt;li&gt;Github - AWS CodeBuild (새로 만든 부분) - EB 서버 형태로 Pipeline 작성&lt;/li&gt;
+  &lt;li&gt;도커를 참조해서 code build에 sbt를 설치하는 yml 작성&lt;/li&gt;
+  &lt;li&gt;처음에는 file을 안쓰고 그 이후에는 file 경로가 잘못되서 &lt;strong&gt;제이슨의 도움&lt;/strong&gt;으로 직접 eb의 톰캣을 확인하고 수정함&lt;/li&gt;
+  &lt;li&gt;제대로 파일을 명시한 이후에는 war 파일이 아니라 &lt;strong&gt;소스&lt;/strong&gt;가 톰캣에 들어있는 상황을 확인&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;version: 0.2
+
+env:
+  variables:
+    PACKAGE: revenue-api
+    SBT_VERSION: 0.13.16
+
+phases:
+  install:
+    commands:
+      - curl -L -o sbt-${SBT_VERSION}.deb https://dl.bintray.com/sbt/debian/sbt-${SBT_VERSION}.deb &amp;amp;&amp;amp; \
+      - dpkg -i sbt-${SBT_VERSION}.deb &amp;amp;&amp;amp; \
+      - rm sbt-${SBT_VERSION}.deb &amp;amp;&amp;amp; \
+      - apt update &amp;amp;&amp;amp; \
+      - apt install sbt &amp;amp;&amp;amp; \
+      - sbt sbtVersion
+  build:
+    commands:
+      - sbt package
+
+artifacts:
+  discard-paths: yes
+  files:
+    - target/scala-2.12/revenue-api_2.12-0.1.0-SNAPSHOT.war
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;장단점-2&quot;&gt;장단점&lt;/h3&gt;
+
+&lt;p&gt;장점: EB 배포 자체는 별다른 노력이 필요없음, 간단함&lt;/p&gt;
+
+&lt;p&gt;단점: 이런저런 시행착오 과정에서 톰캣 설정을 많이 확인함&lt;/p&gt;
+
+&lt;p&gt;결론: 다 좋은데, 이상하게 삽질을 많이 하게됨&lt;/p&gt;
+
+&lt;h3 id=&quot;pipeline-사용-후기&quot;&gt;pipeline 사용 후기&lt;/h3&gt;
+
+&lt;p&gt;심플함은 좋았으나 마지막 6번 문제를 해결하고 싶지않아 결국 &lt;strong&gt;Travis CI&lt;/strong&gt; 를 쓰기로 결정했습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;후기&quot;&gt;후기&lt;/h2&gt;
+
+&lt;p&gt;고등학교 시절 처음 써보는 언어로 프로젝트를 했었습니다. (주로 PHP, python3) 처음에는 무작적 코딩부터 시작했다가 코드량이 늘어나면서 나중에는 소스관리도 안되고 개발하는 시간보다는
+리서치와 빌드, 배포로 시간을 다 까먹고 프로젝트가 망한 경험이 있습니다. 그 후로 코딩 외적인 주석이나 테스트, 배포 자동화, 일정관리의 중요성을 깨달았지만
+별다른 공부를 못했었습니다. 그러다 이번에 배포자동화 툴 Jenkins , Circle CI, AWS CodePipeline (CodeBuild), Travis CI 를 사용하면서 리눅스와 shell을 공부하는
+계기가 되었습니다.
+—
+layout: post
+title: 배포/테스트 자동화 1
+—&lt;/p&gt;
+
+&lt;p&gt;안녕하세요 1년차 개발자 윌리입니다. 매드업에서 사용하는 관리도구 revenue의 배포자동화 시행착오 경험담을 포스팅합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;배포자동화를-하는-이유-1&quot;&gt;배포자동화를 하는 이유&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;여러가지 환경과 서버에 배포할 때 유리하다.&lt;/li&gt;
+  &lt;li&gt;배포, 테스트에 드는 수작업이 줄어서 코딩에 집중할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;여러가지 환경, 서버에 수동으로 배포한다면 그 만큼 시간이 걸리지만 한번 자동화를 해놓으면 그런 수고가 사라집니다. 테스트도 마찬가지입니다. 예를들면 python 라이브러리를
+만들었는데 3.5, 3.6, 3.7 버전 전부 호환되는지를 테스트를 배포자동화를 한번 구축해놓으면 소스 commit 마다 할 수 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;배포자동화를 하기 이전에는 branch별로 AWS Elastic beanstalk에 config.yml을 수정하고 war 파일 만들고 EB deploy 명령으로 배포했습니다. 자잘하게 시간이 걸리고 실수의 여지도 있었지만 배포자동화를 한후에는
+commit push만 하면 서버에 반영되서 편해졌습니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;어떤걸-써야하나-1&quot;&gt;어떤걸 써야하나?&lt;/h2&gt;
+
+&lt;h3 id=&quot;후보-1&quot;&gt;후보&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Jenkins&lt;/li&gt;
+  &lt;li&gt;Circle CI&lt;/li&gt;
+  &lt;li&gt;AWS CodePipeline&lt;/li&gt;
+  &lt;li&gt;Travis CI&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;위 4가지를 사용해보았습니다. 각자 장단점이 있지만 결론부터 말하면 결국 Trvis를 사용했습니다.
+처음 자료 조사를 할 때는 다음 글을 참조했습니다.&lt;/p&gt;
+
+&lt;p&gt;https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;시행착오-1-jenkins-1&quot;&gt;시행착오 1 Jenkins&lt;/h2&gt;
+
+&lt;h3 id=&quot;시행착오-과정-3&quot;&gt;시행착오 과정&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;AWS에 프리티어로 EC2를 만든후 yum에 Jenkins를 &lt;strong&gt;추가해서&lt;/strong&gt; 설치&lt;/li&gt;
+  &lt;li&gt;SBT 설치&lt;/li&gt;
+  &lt;li&gt;젠킨스 파이프라인 작성 + Github 연동&lt;/li&gt;
+  &lt;li&gt;JVM 기반의 SBT와 Jenkins가 생각보다 메모리를 많이 사용해서 둘을 같이 사용하면 오버플로우가 발생해 EC2 볼륨을 키움&lt;/li&gt;
+  &lt;li&gt;서버배포를 위해 pip로 Elasticbeanstalk cli를 설치함&lt;/li&gt;
+  &lt;li&gt;Elasticbeanstalk 줄여서 EB를 pip로 설치해서 권한이 꼬임 Jenkins는 jenkins-user라는
+유저이고 EB는 ec2-user로 되어있었다&lt;/li&gt;
+  &lt;li&gt;Jenkins와 EB를 yum (같은 &lt;strong&gt;패키지 관리자&lt;/strong&gt;) 다시 설치하고 그래도 꼬여있는 권한은 chmod로 수정함&lt;/li&gt;
+  &lt;li&gt;EB config.yml을 설정하는 shell 작성&lt;/li&gt;
+  &lt;li&gt;배포자동화 성공&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;장단점-3&quot;&gt;장단점&lt;/h3&gt;
+
+&lt;p&gt;장점: 혼자 리눅스를 공부하기는 좋다, &lt;strong&gt;리눅스를 잘한다면&lt;/strong&gt; 다양한 커스터마이징이 가능함, 오픈소스이기에 무료&lt;/p&gt;
+
+&lt;p&gt;단점: 다양한 환경을 일일이 &lt;strong&gt;세팅하기가 힘들다&lt;/strong&gt;, 리눅스를 못한다면 끔찍한 야근각, 배포자동화를 위해 서버가 필요함(과금)&lt;/p&gt;
+
+&lt;p&gt;결론: jenkins 자체는 무료지만 &lt;strong&gt;서버는 유료&lt;/strong&gt; 리눅스사용에 미숙하고 개인 프로젝트가 아니라면 사용하는데 예매함&lt;/p&gt;
+
+&lt;h3 id=&quot;jenkins-사용-후기-1&quot;&gt;Jenkins 사용 후기&lt;/h3&gt;
+
+&lt;p&gt;고등학교 1학년 이후로 오랫만에 리눅스로 이것저것 삽질하는 경험 자체는 생각보다 재미있지만 회사 프로젝트로 Jenkins를
+쓰기에 시간이 너무 많이 들고 지속적인 서버관리가 필요했습니다. jenkins 자체도 무료지만 결국 서버비용이 들기에
+리눅스에 미숙한 제가하기는 시행착오와 시간소모가 너무 컸습니다.&lt;/p&gt;
+
+&lt;p&gt;Jenkins를 사용하는 친구들을 찾아보아도 다들 와우의 전설 리로이 젠킨스만 알려줬습니다… 저 같은 신입수준에서
+Jenkins를 사용해본 개발자는 적어서 조금 이라도 편하게 하려면 다른 CI를 사용해야합니다.&lt;/p&gt;
+
+&lt;p&gt;리이로이이~ 젠킨스!!!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;시행착오-2-circle-ci-1&quot;&gt;시행착오 2 Circle CI&lt;/h2&gt;
+
+&lt;h3 id=&quot;시행착오-과정-4&quot;&gt;시행착오 과정&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;테스트를 위해 Circle CI 무료 버전을 사용&lt;/li&gt;
+  &lt;li&gt;Circle CI 자료조사; &lt;strong&gt;Docker 기반&lt;/strong&gt;으로 환경을 구성하기에 &lt;strong&gt;Docker와 매우 흡사함&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;docker 참조해서 circle.yml 작성&lt;/li&gt;
+  &lt;li&gt;배포를 위해 pip로 EB cli룰 설치하는 코드를 yml에 추가&lt;/li&gt;
+  &lt;li&gt;EB의 config.yml을 만드는 쉘 작성&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+
+    working_directory: ~/repo
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
+    checkout:
+      post:
+        - git clone https://github.com/madup-inc/revenue-api
+        - git checkout develop
+
+    steps:
+      - checkout
+      - run: sbt package
+
+##### deploy 생략
+
+workflows:
+  version: 2
+  build_deploy:
+    jobs:
+      - build
+      - deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;장단점-4&quot;&gt;장단점&lt;/h3&gt;
+
+&lt;p&gt;장점: Jenkins의 비해 매우 쉬움, 설치해야될 패키지가 많을 수록 빠름, 도커기반, 클라우드 환경, 빌드 배포 테스트를 각 step 별로 나눠서 가능함&lt;/p&gt;
+
+&lt;p&gt;단점: 도커와 다른게 없으므로 그냥 서버에 도커로 배포자동화를 하는것과 무엇이 다른지 의문이 듬, AWS와의 연동은 가능하지만 불편함을 느낌&lt;/p&gt;
+
+&lt;p&gt;결론: 도커&lt;/p&gt;
+
+&lt;h3 id=&quot;circle-ci-사용-후기-1&quot;&gt;Circle CI 사용 후기&lt;/h3&gt;
+
+&lt;p&gt;빌드, 배포, 테스트를 각 step별로 할려면 Jenkins에서는 groovy코드를 짜야하고 Travis CI에서는 아직 베타 기능인데
+yml에서 간단하게 사용할 수 있는점이 좋있다. 하지만 AWS 중에 EB 와의 연동이 불편했고 도커와 다른점을 느끼기 힘들었다. 그래서 일단 다른 툴도 써보기로 했다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;시행착오-3-aws-codepipeline-1&quot;&gt;시행착오 3 AWS CodePipeline&lt;/h2&gt;
+
+&lt;h3 id=&quot;시행착오-과정-5&quot;&gt;시행착오 과정&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;사수인 제이슨이 먼저 pipeline을 사용함&lt;/li&gt;
+  &lt;li&gt;그 동안에 너무 고생을 많이 해서 제이슨의 yml을 참조함&lt;/li&gt;
+  &lt;li&gt;Github - AWS CodeBuild (새로 만든 부분) - EB 서버 형태로 Pipeline 작성&lt;/li&gt;
+  &lt;li&gt;도커를 참조해서 code build에 sbt를 설치하는 yml 작성&lt;/li&gt;
+  &lt;li&gt;처음에는 file을 안쓰고 그 이후에는 file 경로가 잘못되서 &lt;strong&gt;제이슨의 도움&lt;/strong&gt;으로 직접 eb의 톰캣을 확인하고 수정함&lt;/li&gt;
+  &lt;li&gt;제대로 파일을 명시한 이후에는 war 파일이 아니라 &lt;strong&gt;소스&lt;/strong&gt;가 톰캣에 들어있는 상황을 확인&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;version: 0.2
+
+env:
+  variables:
+    PACKAGE: revenue-api
+    SBT_VERSION: 0.13.16
+
+phases:
+  install:
+    commands:
+      - curl -L -o sbt-${SBT_VERSION}.deb https://dl.bintray.com/sbt/debian/sbt-${SBT_VERSION}.deb &amp;amp;&amp;amp; \
+      - dpkg -i sbt-${SBT_VERSION}.deb &amp;amp;&amp;amp; \
+      - rm sbt-${SBT_VERSION}.deb &amp;amp;&amp;amp; \
+      - apt update &amp;amp;&amp;amp; \
+      - apt install sbt &amp;amp;&amp;amp; \
+      - sbt sbtVersion
+  build:
+    commands:
+      - sbt package
+
+artifacts:
+  discard-paths: yes
+  files:
+    - target/scala-2.12/revenue-api_2.12-0.1.0-SNAPSHOT.war
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;장단점-5&quot;&gt;장단점&lt;/h3&gt;
+
+&lt;p&gt;장점: EB 배포 자체는 별다른 노력이 필요없음, 간단함&lt;/p&gt;
+
+&lt;p&gt;단점: 이런저런 시행착오 과정에서 톰캣 설정을 많이 확인함&lt;/p&gt;
+
+&lt;p&gt;결론: 다 좋은데, 이상하게 삽질을 많이 하게됨&lt;/p&gt;
+
+&lt;h3 id=&quot;pipeline-사용-후기-1&quot;&gt;pipeline 사용 후기&lt;/h3&gt;
+
+&lt;p&gt;심플함은 좋았으나 마지막 6번 문제를 해결하고 싶지않아 결국 &lt;strong&gt;Travis CI&lt;/strong&gt; 를 쓰기로 결정했습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;후기-1&quot;&gt;후기&lt;/h2&gt;
+
+&lt;p&gt;고등학교 시절 처음 써보는 언어로 프로젝트를 했었습니다. (주로 PHP, python3) 처음에는 무작적 코딩부터 시작했다가 코드량이 늘어나면서 나중에는 소스관리도 안되고 개발하는 시간보다는
+리서치와 빌드, 배포로 시간을 다 까먹고 프로젝트가 망한 경험이 있습니다. 그 후로 코딩 외적인 주석이나 테스트, 배포 자동화, 일정관리의 중요성을 깨달았지만
+별다른 공부를 못했었습니다. 그러다 이번에 배포자동화 툴 Jenkins , Circle CI, AWS CodePipeline (CodeBuild), Travis CI 를 사용하면서 리눅스와 shell을 공부하는
+계기가 되었습니다.&lt;/p&gt;
+</description>
+				<pubDate>Wed, 02 May 2018 00:00:00 +0900</pubDate>
+				<link>http://localhost:4000/2018/05/02/travis1.html</link>
+				<guid isPermaLink="true">http://localhost:4000/2018/05/02/travis1.html</guid>
+			</item>
+		
+			<item>
+				<title>Read Me</title>
+				<description>&lt;h1 id=&quot;jekyll-xixia&quot;&gt;Jekyll Xixia&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Get it from &lt;a href=&quot;https://github.com/zxixia/jekyll-xixia&quot;&gt;github&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;See the &lt;a href=&quot;http://xixia.info/jekyll-xixia/&quot;&gt;live demo&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;See it &lt;a href=&quot;http://xixia.info/&quot;&gt;in action on my own blog&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A simple and clean Jekyll theme using &lt;a href=&quot;http://getbootstrap.com&quot;&gt;bootstrap&lt;/a&gt;
+(not to be confused with jekyll-bootstrap) that’s easy to modify and very
+modular in component and element reuse.&lt;/p&gt;
+
+&lt;p&gt;The theme works well on mobile phones, using a collapsable nav bar and hiding the
+sidebar. The links pane in the sidebar is available on mobile through the nav menu,
+and you can do the same thing for any other sections added to the sidebar.&lt;/p&gt;
+
+&lt;p&gt;Don’t forget to occassionally merge against my upstream repository so you can get
+the latest changes. Pull requests are encouraged and accepted!&lt;/p&gt;
+
+&lt;h1 id=&quot;preview&quot;&gt;Preview&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;//assets/images/preview.png&quot; alt=&quot;Xixia&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;license&quot;&gt;License&lt;/h1&gt;
+
+&lt;p&gt;The content of this theme is distributed and licensed under a
+&lt;img src=&quot;/assets/images/cc_by_88x31.png&quot; alt=&quot;License Badge&quot; /&gt;
+&lt;a href=&quot;https://creativecommons.org/licenses/by/4.0/legalcode&quot;&gt;Creative Commons Attribution 4.0 License&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;This license lets others distribute, remix, tweak, and build upon your work,
+even commercially, as long as they credit you for the original creation. This
+is the most accommodating of licenses offered. Recommended for maximum
+dissemination and use of licensed materials.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In other words: you can do anything you want with this theme on any site, just please
+provide a link to &lt;a href=&quot;https://github.com/zxixia/jekyll-xixia&quot;&gt;the original theme on github&lt;/a&gt;
+so I get credit for the original design. Beyond that, have at it!&lt;/p&gt;
+
+&lt;h1 id=&quot;thanks&quot;&gt;Thanks&lt;/h1&gt;
+
+&lt;p&gt;1，&lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;2，&lt;a href=&quot;http://getbootstrap.com/&quot;&gt;Bootstrap&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;3，&lt;a href=&quot;https://github.com/&quot;&gt;Github&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;4，&lt;a href=&quot;https://github.com/scotte/jekyll-clean&quot;&gt;Jekyll Clean Theme&lt;/a&gt;&lt;/p&gt;
+
+</description>
+				<pubDate>Tue, 19 Sep 2017 00:00:00 +0900</pubDate>
+				<link>http://localhost:4000/other/2017/09/19/README.html</link>
+				<guid isPermaLink="true">http://localhost:4000/other/2017/09/19/README.html</guid>
+			</item>
+		
+			<item>
+				<title>How to get beautiful ASCII pics and ASCII text</title>
+				<description>&lt;h3 id=&quot;1ascii-generator&quot;&gt;1，ASCII Generator&lt;/h3&gt;
+
+&lt;p&gt;In &lt;a href=&quot;http://www.network-science.de/ascii/&quot;&gt;ASCII Generator&lt;/a&gt;, you can generate your ASCII texts。&lt;/p&gt;
+
+&lt;p&gt;Such like the &lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;XIXIA&lt;/code&gt;&lt;/strong&gt;！&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-v&quot; data-lang=&quot;v&quot;&gt;____  ___._______  ___.___   _____   
+\   \/  /|   \   \/  /|   | /  _  \  
+ \     / |   |\     / |   |/  /_\  \ 
+ /     \ |   |/     \ |   /    |    \
+/___/\  \|___/___/\  \|___\____|__  /
+      \_/          \_/            \/ 
+
+------------------------------------
+___   ___  __  ___   ___  __       ___      
+\  \ /  / |  | \  \ /  / |  |     /   \     
+ \  V  /  |  |  \  V  /  |  |    /  ^  \    
+  &amp;gt;   &amp;lt;   |  |   &amp;gt;   &amp;lt;   |  |   /  /_\  \   
+ /  .  \  |  |  /  .  \  |  |  /  _____  \  
+/__/ \__\ |__| /__/ \__\ |__| /__/     \__\ 
+
+------------------------------------
+__   _________   _______          
+\ \ / /_   _\ \ / /_   _|   /\    
+ \ V /  | |  \ V /  | |    /  \   
+  &amp;gt; &amp;lt;   | |   &amp;gt; &amp;lt;   | |   / /\ \  
+ / . \ _| |_ / . \ _| |_ / ____ \ 
+/_/ \_\_____/_/ \_\_____/_/    \_\   &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;2chriscom&quot;&gt;2，Chris.com&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.chris.com/ascii/&quot;&gt;Chris.com&lt;/a&gt; collects a lot of ASCII pics, such like the world map：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-v&quot; data-lang=&quot;v&quot;&gt;-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----
+           . _..::__:  ,-&quot;-&quot;._        |7       ,     _,.__
+   _.___ _ _&amp;lt;_&amp;gt;`!(._`.`-.    /         _._     `_ ,_/  '  '-._.---.-.__
+&amp;gt;.{     &quot; &quot; `-==,',._\{  \  / {)      / _ &quot;&amp;gt;_,-' `                mt-2_
+  \_.:--.       `._ )`^-. &quot;'       , [_/(                       __,/-'
+ '&quot;'     \         &quot;    _L        oD_,--'                )     /. (|
+          |           ,'          _)_.\\._&amp;lt;&amp;gt; 6              _,' /  '
+          `.         /           [_/_'` `&quot;(                &amp;lt;'}  )
+           \\    .-. )           /   `-'&quot;..' `:.#          _)  '
+    `        \  (  `(           /         `:\  &amp;gt; \  ,-^.  /' '
+              `._,   &quot;&quot;         |           \`'   \|   ?_)  {\
+                 `=.---.        `._._       ,'     &quot;`  |' ,- '.
+                   |    `-._         |     /          `:`&amp;lt;_|h--._
+                   (        &amp;gt;        .     | ,          `=.__.`-'\
+                    `.     /         |     |{|              ,-.,\     .
+                     |   ,'           \   / `'            ,&quot;     \
+                     |  /              |_'                |  __  /
+                     | |                                  '-'  `-'   \.
+                     |/                                         &quot;    /
+                     \.                                             '
+
+                      ,/            ______._.--._ _..---.---------._
+     ,-----&quot;-..?----_/ )      __,-'&quot;             &quot;                  (
+-.._(                  `-----'                                       `-
+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----
+Map (C) 1998 Matthew Thomas. Freely usable if this line is included. &amp;lt;-&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;br /&gt;
+Elephant.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-v&quot; data-lang=&quot;v&quot;&gt;              ___.-~&quot;~-._   __....__
+            .'    `    \ ~&quot;~        ``-.
+           /` _      )  `\              `\
+          /`  a)    /     |               `\
+         :`        /      |                 \
+    &amp;lt;`-._|`  .-.  (      /   .            `;\\
+     `-. `--'_.'-.;\___/'   .      .       | \\
+  _     /:--`     |        /     /        .'  \\
+ (&quot;\   /`/        |       '     '         /    :`;
+ `\'\_/`/         .\     /`~`=-.:        /     ``
+   `._.'          /`\    |      `\      /(
+                 /  /\   |        `Y   /  \
+           jgs  J  /  Y  |         |  /`\  \
+               /  |   |  |         |  |  |  |
+              &quot;---&quot;  /___|        /___|  /__|
+                     '&quot;&quot;&quot;         '&quot;&quot;&quot;  '&quot;&quot;&quot;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;3welcome-to-lost-in-xixia&quot;&gt;3，Welcome to lost in Xixia&lt;/h3&gt;
+&lt;p&gt;The 404 page of Xixia, is based on ASCII pics and ASCII texts!&lt;/p&gt;
+
+&lt;p&gt;So, warmly welcome you to lost in &lt;a href=&quot;http://xixia.info/welcome-lost-in-xixia&quot;&gt;Xixia&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;thanks&quot;&gt;Thanks：&lt;/h3&gt;
+
+&lt;p&gt;1，&lt;a href=&quot;http://www.chris.com/ascii/&quot;&gt;Chris.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;2，&lt;a href=&quot;http://www.network-science.de/ascii/&quot;&gt;ASCII Generator&lt;/a&gt;&lt;/p&gt;
+
+</description>
+				<pubDate>Fri, 15 Sep 2017 00:00:00 +0900</pubDate>
+				<link>http://localhost:4000/programmer/2017/09/15/ascii-art-and-text.html</link>
+				<guid isPermaLink="true">http://localhost:4000/programmer/2017/09/15/ascii-art-and-text.html</guid>
+			</item>
+		
+			<item>
+				<title>Welcome to Jekyll!</title>
+				<description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+
+&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+				<pubDate>Tue, 05 Sep 2017 15:10:51 +0900</pubDate>
+				<link>http://localhost:4000/jekyll/2017/09/05/welcome-to-jekyll.html</link>
+				<guid isPermaLink="true">http://localhost:4000/jekyll/2017/09/05/welcome-to-jekyll.html</guid>
+			</item>
+		
+			<item>
+				<title>Readme of Jekyll!</title>
+				<description>&lt;h1 id=&quot;jekyll&quot;&gt;&lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://rubygems.org/gems/jekyll&quot;&gt;&lt;img src=&quot;https://img.shields.io/gem/v/jekyll.svg&quot; alt=&quot;Gem Version&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://travis-ci.org/jekyll/jekyll&quot;&gt;&lt;img src=&quot;https://img.shields.io/travis/jekyll/jekyll/master.svg?label=Linux%20build&quot; alt=&quot;Linux Build Status&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://ci.appveyor.com/project/jekyll/jekyll/branch/master&quot;&gt;&lt;img src=&quot;https://img.shields.io/appveyor/ci/jekyll/jekyll/master.svg?label=Windows%20build&quot; alt=&quot;Windows Build status&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://codeclimate.com/github/jekyll/jekyll/coverage&quot;&gt;&lt;img src=&quot;https://img.shields.io/codeclimate/coverage/github/jekyll/jekyll.svg&quot; alt=&quot;Test Coverage&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://codeclimate.com/github/jekyll/jekyll&quot;&gt;&lt;img src=&quot;https://img.shields.io/codeclimate/github/jekyll/jekyll.svg&quot; alt=&quot;Code Climate&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://gemnasium.com/jekyll/jekyll&quot;&gt;&lt;img src=&quot;https://img.shields.io/gemnasium/jekyll/jekyll.svg&quot; alt=&quot;Dependency Status&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://hakiri.io/github/jekyll/jekyll/master&quot;&gt;&lt;img src=&quot;https://hakiri.io/github/jekyll/jekyll/master.svg&quot; alt=&quot;Security&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Jekyll is a simple, blog-aware, static site generator perfect for personal, project, or organization sites. Think of it like a file-based CMS, without all the complexity. Jekyll takes your content, renders Markdown and Liquid templates, and spits out a complete, static website ready to be served by Apache, Nginx or another web server. Jekyll is the engine behind &lt;a href=&quot;https://pages.github.com&quot;&gt;GitHub Pages&lt;/a&gt;, which you can use to host sites right from your GitHub repositories.&lt;/p&gt;
+
+&lt;h2 id=&quot;philosophy&quot;&gt;Philosophy&lt;/h2&gt;
+
+&lt;p&gt;Jekyll does what you tell it to do — no more, no less. It doesn’t try to outsmart users by making bold assumptions, nor does it burden them with needless complexity and configuration. Put simply, Jekyll gets out of your way and allows you to concentrate on what truly matters: your content.&lt;/p&gt;
+
+&lt;p&gt;See: https://jekyllrb.com/philosophy&lt;/p&gt;
+
+&lt;h2 id=&quot;having-trouble&quot;&gt;Having trouble?&lt;/h2&gt;
+
+&lt;p&gt;See: https://jekyllrb.com/docs/troubleshooting/&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-started&quot;&gt;Getting Started&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jekyllrb.com/docs/installation/&quot;&gt;Install&lt;/a&gt; the gem&lt;/li&gt;
+  &lt;li&gt;Read up about its &lt;a href=&quot;https://jekyllrb.com/docs/usage/&quot;&gt;Usage&lt;/a&gt; and &lt;a href=&quot;https://jekyllrb.com/docs/configuration/&quot;&gt;Configuration&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Take a gander at some existing &lt;a href=&quot;https://wiki.github.com/jekyll/jekyll/sites&quot;&gt;Sites&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/jekyll/jekyll/fork&quot;&gt;Fork&lt;/a&gt; and &lt;a href=&quot;https://jekyllrb.com/docs/contributing/&quot;&gt;Contribute&lt;/a&gt; your own modifications&lt;/li&gt;
+  &lt;li&gt;Have questions? Check out our official forum community &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt; or &lt;a href=&quot;https://botbot.me/freenode/jekyll/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;#jekyll&lt;/code&gt; on irc.freenode.net&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;code-of-conduct&quot;&gt;Code of Conduct&lt;/h2&gt;
+
+&lt;p&gt;In order to have a more open and welcoming community, Jekyll adheres to a
+&lt;a href=&quot;CODE_OF_CONDUCT.markdown&quot;&gt;code of conduct&lt;/a&gt; adapted from the Ruby on Rails code of
+conduct.&lt;/p&gt;
+
+&lt;p&gt;Please adhere to this code of conduct in any interactions you have in the
+Jekyll community. It is strictly enforced on all official Jekyll
+repositories, websites, and resources. If you encounter someone violating
+these terms, please let a &lt;a href=&quot;https://github.com/orgs/jekyll/teams/affinity-team-captains/members&quot;&gt;team captain&lt;/a&gt; know and we will address it as soon as possible.&lt;/p&gt;
+
+&lt;h2 id=&quot;diving-in&quot;&gt;Diving In&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://import.jekyllrb.com/docs/home/&quot;&gt;Migrate&lt;/a&gt; from your previous system&lt;/li&gt;
+  &lt;li&gt;Learn how the &lt;a href=&quot;https://jekyllrb.com/docs/frontmatter/&quot;&gt;YAML Front Matter&lt;/a&gt; works&lt;/li&gt;
+  &lt;li&gt;Put information on your site with &lt;a href=&quot;https://jekyllrb.com/docs/variables/&quot;&gt;Variables&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Customize the &lt;a href=&quot;https://jekyllrb.com/docs/permalinks/&quot;&gt;Permalinks&lt;/a&gt; your posts are generated with&lt;/li&gt;
+  &lt;li&gt;Use the built-in &lt;a href=&quot;https://jekyllrb.com/docs/templates/&quot;&gt;Liquid Extensions&lt;/a&gt; to make your life easier&lt;/li&gt;
+  &lt;li&gt;Use custom &lt;a href=&quot;https://jekyllrb.com/docs/plugins/&quot;&gt;Plugins&lt;/a&gt; to generate content specific to your site&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;license&quot;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;See the &lt;a href=&quot;https://github.com/jekyll/jekyll/blob/master/LICENSE&quot;&gt;LICENSE&lt;/a&gt; file.&lt;/p&gt;
+</description>
+				<pubDate>Tue, 05 Sep 2017 15:10:51 +0900</pubDate>
+				<link>http://localhost:4000/jekyll/2017/09/05/reademe-of-jekyll.html</link>
+				<guid isPermaLink="true">http://localhost:4000/jekyll/2017/09/05/reademe-of-jekyll.html</guid>
+			</item>
+		
+			<item>
+				<title>Another copy of the Readme of Jekyll!</title>
+				<description>&lt;h1 id=&quot;jekyll&quot;&gt;&lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://rubygems.org/gems/jekyll&quot;&gt;&lt;img src=&quot;https://img.shields.io/gem/v/jekyll.svg&quot; alt=&quot;Gem Version&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://travis-ci.org/jekyll/jekyll&quot;&gt;&lt;img src=&quot;https://img.shields.io/travis/jekyll/jekyll/master.svg?label=Linux%20build&quot; alt=&quot;Linux Build Status&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://ci.appveyor.com/project/jekyll/jekyll/branch/master&quot;&gt;&lt;img src=&quot;https://img.shields.io/appveyor/ci/jekyll/jekyll/master.svg?label=Windows%20build&quot; alt=&quot;Windows Build status&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://codeclimate.com/github/jekyll/jekyll/coverage&quot;&gt;&lt;img src=&quot;https://img.shields.io/codeclimate/coverage/github/jekyll/jekyll.svg&quot; alt=&quot;Test Coverage&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://codeclimate.com/github/jekyll/jekyll&quot;&gt;&lt;img src=&quot;https://img.shields.io/codeclimate/github/jekyll/jekyll.svg&quot; alt=&quot;Code Climate&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://gemnasium.com/jekyll/jekyll&quot;&gt;&lt;img src=&quot;https://img.shields.io/gemnasium/jekyll/jekyll.svg&quot; alt=&quot;Dependency Status&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://hakiri.io/github/jekyll/jekyll/master&quot;&gt;&lt;img src=&quot;https://hakiri.io/github/jekyll/jekyll/master.svg&quot; alt=&quot;Security&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Jekyll is a simple, blog-aware, static site generator perfect for personal, project, or organization sites. Think of it like a file-based CMS, without all the complexity. Jekyll takes your content, renders Markdown and Liquid templates, and spits out a complete, static website ready to be served by Apache, Nginx or another web server. Jekyll is the engine behind &lt;a href=&quot;https://pages.github.com&quot;&gt;GitHub Pages&lt;/a&gt;, which you can use to host sites right from your GitHub repositories.&lt;/p&gt;
+
+&lt;h2 id=&quot;philosophy&quot;&gt;Philosophy&lt;/h2&gt;
+
+&lt;p&gt;Jekyll does what you tell it to do — no more, no less. It doesn’t try to outsmart users by making bold assumptions, nor does it burden them with needless complexity and configuration. Put simply, Jekyll gets out of your way and allows you to concentrate on what truly matters: your content.&lt;/p&gt;
+
+&lt;p&gt;See: https://jekyllrb.com/philosophy&lt;/p&gt;
+
+&lt;h2 id=&quot;having-trouble&quot;&gt;Having trouble?&lt;/h2&gt;
+
+&lt;p&gt;See: https://jekyllrb.com/docs/troubleshooting/&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-started&quot;&gt;Getting Started&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jekyllrb.com/docs/installation/&quot;&gt;Install&lt;/a&gt; the gem&lt;/li&gt;
+  &lt;li&gt;Read up about its &lt;a href=&quot;https://jekyllrb.com/docs/usage/&quot;&gt;Usage&lt;/a&gt; and &lt;a href=&quot;https://jekyllrb.com/docs/configuration/&quot;&gt;Configuration&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Take a gander at some existing &lt;a href=&quot;https://wiki.github.com/jekyll/jekyll/sites&quot;&gt;Sites&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/jekyll/jekyll/fork&quot;&gt;Fork&lt;/a&gt; and &lt;a href=&quot;https://jekyllrb.com/docs/contributing/&quot;&gt;Contribute&lt;/a&gt; your own modifications&lt;/li&gt;
+  &lt;li&gt;Have questions? Check out our official forum community &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt; or &lt;a href=&quot;https://botbot.me/freenode/jekyll/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;#jekyll&lt;/code&gt; on irc.freenode.net&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;code-of-conduct&quot;&gt;Code of Conduct&lt;/h2&gt;
+
+&lt;p&gt;In order to have a more open and welcoming community, Jekyll adheres to a
+&lt;a href=&quot;CODE_OF_CONDUCT.markdown&quot;&gt;code of conduct&lt;/a&gt; adapted from the Ruby on Rails code of
+conduct.&lt;/p&gt;
+
+&lt;p&gt;Please adhere to this code of conduct in any interactions you have in the
+Jekyll community. It is strictly enforced on all official Jekyll
+repositories, websites, and resources. If you encounter someone violating
+these terms, please let a &lt;a href=&quot;https://github.com/orgs/jekyll/teams/affinity-team-captains/members&quot;&gt;team captain&lt;/a&gt; know and we will address it as soon as possible.&lt;/p&gt;
+
+&lt;h2 id=&quot;diving-in&quot;&gt;Diving In&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://import.jekyllrb.com/docs/home/&quot;&gt;Migrate&lt;/a&gt; from your previous system&lt;/li&gt;
+  &lt;li&gt;Learn how the &lt;a href=&quot;https://jekyllrb.com/docs/frontmatter/&quot;&gt;YAML Front Matter&lt;/a&gt; works&lt;/li&gt;
+  &lt;li&gt;Put information on your site with &lt;a href=&quot;https://jekyllrb.com/docs/variables/&quot;&gt;Variables&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Customize the &lt;a href=&quot;https://jekyllrb.com/docs/permalinks/&quot;&gt;Permalinks&lt;/a&gt; your posts are generated with&lt;/li&gt;
+  &lt;li&gt;Use the built-in &lt;a href=&quot;https://jekyllrb.com/docs/templates/&quot;&gt;Liquid Extensions&lt;/a&gt; to make your life easier&lt;/li&gt;
+  &lt;li&gt;Use custom &lt;a href=&quot;https://jekyllrb.com/docs/plugins/&quot;&gt;Plugins&lt;/a&gt; to generate content specific to your site&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;license&quot;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;See the &lt;a href=&quot;https://github.com/jekyll/jekyll/blob/master/LICENSE&quot;&gt;LICENSE&lt;/a&gt; file.&lt;/p&gt;
+</description>
+				<pubDate>Tue, 05 Sep 2017 15:10:51 +0900</pubDate>
+				<link>http://localhost:4000/jekyll/2017/09/05/another-copy-of-the-reademe-of-jekyll.html</link>
+				<guid isPermaLink="true">http://localhost:4000/jekyll/2017/09/05/another-copy-of-the-reademe-of-jekyll.html</guid>
+			</item>
+		
+	</channel>
+</rss>

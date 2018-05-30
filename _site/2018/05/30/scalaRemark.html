@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Willy</title>
+	<link rel="icon" href="/assets/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Willy</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/">Home</a></li>
+                    <li class="active"><a href="/archive.html">Archive</a></li>
+                    <li class="active"><a href="/categories.html">Categories</a></li>
+                    <li class="active"><a href="/tags.html">Tags</a></li>
+                    <li class="active"><a href="/about.html">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-3 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/">
+            <img src="/assets/images/xixia.gif" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        우리는 무엇인가를 진정으로 사랑한다면 그것을 소유하지 않아도 행복할 수 있다. 같은 하늘 아래 어딘가에 그것이 있다는 그 사실만으로도 가슴이 뛸 수 있는 것이다 - 철학 영화를 캐스팅 하다
+    </div>
+</div>
+
+
+
+<div class="sidebar well">
+    <h1>Recent Posts</h1>
+    <ul>
+        
+          <li><a href="/2018/05/30/scalaRemark.html">스칼라주석</a></li>
+        
+          <li><a href="/2018/05/29/travis2.html">배포/테스트 자동화 2</a></li>
+        
+          <li><a href="/2018/05/10/GoodShell.html">멋있는 명령어 모음 (작성중)</a></li>
+        
+          <li><a href="/2018/05/02/travis1.html">배포/테스트 자동화 1</a></li>
+        
+          <li><a href="/other/2017/09/19/README.html">Read Me</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>Links</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="https://github.com/qowns8">
+      Willy
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-9">
+                
+<div class="well article">
+        <h2><a href="/2018/05/30/scalaRemark.html">스칼라주석</a></h2>
+        <span class="post-date">
+            
+            May-30-2018
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h1 id="스칼라-주석-가이드">스칼라 주석 가이드</h1>
+
+<hr />
+
+<h2 id="scaladoc">scaladoc</h2>
+<p>intelliJ에서 스칼라 주석을 통한 <em>scalaDocs</em>을 만드는 기능이 있다.</p>
+
+<p>상단 -&gt; tool -&gt; Generate scaladoc -&gt; 각각 설정 후 ok 버튼</p>
+
+<h2 id="docs를-만들기-위한-태그들">docs를 만들기 위한 태그들</h2>
+<p>https://docs.scala-lang.org/overviews/scaladoc/for-library-authors.html</p>
+
+<h2 id="주석-예시들">주석 예시들</h2>
+
+<p>다음 예시들은 scala.util과 scala 공식문서를 발취하고 참조했다</p>
+
+<h2 id="예시">예시</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    /** The empty list.
+     *
+     *  @author  Martin Odersky
+     *  @version 1.0, 15/07/2003
+     *  @since   2.8
+     */
+    @SerialVersionUID(0 - 8256821097970055419L)
+    case object Nil extends List[Nothing] {
+      override def isEmpty = true
+      override def head: Nothing =
+        throw new NoSuchElementException("head of empty list")
+      override def tail: List[Nothing] =
+        throw new UnsupportedOperationException("tail of empty list")
+      // Removal of equals method here might lead to an infinite recursion similar to IntMap.equals.
+      override def equals(that: Any) = that match {
+        case that1: scala.collection.GenSeq[_] =&gt; that1.isEmpty
+        case _ =&gt; false
+      }
+    }
+</code></pre></div></div>
+
+<h2 id="object">object</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    /** Factory for [[mypackage.Person]] instances. */
+    object Person {
+      /** Creates a person with a given name and age.
+       *
+       *  @param name their name
+       *  @param age the age of the person to create
+       */
+      def apply(name: String, age: Int) = {}
+    
+      /** Creates a person with a given name and birthdate
+       *
+       *  @param name their name
+       *  @param birthDate the person's birthdate
+       *  @return a new Person instance with the age determined by the
+       *          birthdate and current date.
+       */
+      def apply(name: String, birthDate: java.util.Date) = {}
+    }
+</code></pre></div></div>
+
+<h2 id="package">package</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">package</span> <span class="n">my</span><span class="p">.</span><span class="k">package</span>
+    <span class="p">/**</span> <span class="n">Provides</span> <span class="n">classes</span> <span class="n">for</span> <span class="n">dealing</span> <span class="k">with</span> <span class="n">complex</span> <span class="n">numbers</span><span class="p">.</span>  <span class="n">Also</span> <span class="n">provides</span>
+     <span class="p">*</span>  <span class="n">implicits</span> <span class="n">for</span> <span class="n">converting</span> <span class="k">to</span> <span class="k">and</span> <span class="k">from</span> <span class="p">`</span><span class="n">Int</span><span class="p">`.</span>
+     <span class="p">*</span>
+     <span class="p">*</span>  <span class="p">==</span><span class="n">Overview</span><span class="p">==</span>
+     <span class="p">*</span>  <span class="n">The</span> <span class="n">main</span> <span class="n">class</span> <span class="k">to</span> <span class="n">use</span> <span class="n">is</span> <span class="p">[[</span><span class="n">my</span><span class="p">.</span><span class="k">package</span><span class="p">.</span><span class="n">complex</span><span class="p">.</span><span class="n">Complex</span><span class="p">]],</span> <span class="k">as</span> <span class="n">so</span>
+     <span class="p">*</span>  <span class="p">}</span>
+     <span class="p">*</span>
+     <span class="p">*</span>  <span class="k">If</span> <span class="n">you</span> <span class="k">include</span> <span class="p">[[</span><span class="n">my</span><span class="p">.</span><span class="k">package</span><span class="p">.</span><span class="n">complex</span><span class="p">.</span><span class="n">ComplexConversions</span><span class="p">]],</span> <span class="n">you</span> <span class="n">can</span>
+     <span class="p">*</span>  <span class="n">convert</span> <span class="n">numbers</span> <span class="n">more</span> <span class="n">directly</span>
+     <span class="p">*</span>  <span class="p">}</span>
+     <span class="p">*/</span>
+    <span class="k">package</span> <span class="n">complex</span> <span class="p">{}</span>
+</code></pre></div></div>
+
+<h3 id="constructor">@constructor</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    /** A person who uses our application.
+     *
+     *  @constructor create a new person with a name and age.
+     *  @param name the person's name
+     *  @param age the person's age in years
+     */
+    class Person(name: String, age: Int) {
+    }
+</code></pre></div></div>
+
+<h3 id="autor">@autor</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//@author 만든사람
+</code></pre></div></div>
+
+<h3 id="version">@version</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//@version 버전 날짜
+</code></pre></div></div>
+
+<h3 id="since">@since</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//@since 언제부터사용했는지
+</code></pre></div></div>
+
+<h3 id="param">@param</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//@param 변수이름 설명
+</code></pre></div></div>
+
+<h3 id="tparam">@tparam</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//@tparam T curring에 사용되는 파라미터 설명(T타입 인자)
+</code></pre></div></div>
+
+<h3 id="returns">Returns</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/** Returns `true` if this value is less than or equal to x, `false` otherwise. */
+def &lt;=(x: Byte): Boolean
+</code></pre></div></div>
+
+<h3 id="example">@example</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    	  /**
+       *  @example }
+       */
+      override def slice(from: Int, until: Int): List[A] = {
+        val lo = scala.math.max(from, 0)
+        if (until &lt;= lo || isEmpty) Nil
+        else this drop lo take (until - lo)
+      }
+</code></pre></div></div>
+
+<h2 id="익명함수의-경우">익명함수의 경우</h2>
+
+<p>가끔 익명함수에 주석을 달게될수 있으나 그런 경우 <em>intellij</em>에서는 밑줄을 쳐준다.
+예를 들면  <em>scalatra</em> 에서 각 API URL들… get(){} 형식의 servlet에 구현한 것들은 익명함수를 호출하는 것이므로 주석을 달아도 빨간줄이 생기고 docs가 생성되지 않는다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      /**
+       * ---
+       * @param..
+       * @param..
+       */
+      get ("/") {
+
+        .
+        .
+        .
+        }
+</code></pre></div></div>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                스칼라 <span>(1)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    
+    <a class="btn btn-default" href="/2018/05/29/travis2.html" class="previous">Older Post</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2018 Willy , Powered by
+            
+                <a href="http://jekyllrb.com/">
+                Jekyll
+                </a>
+                <!-- not the last, output a ',' -->
+                
+                ,
+                
+            
+                <a href="http://getbootstrap.com/">
+                Bootstrap
+                </a>
+                <!-- not the last, output a ',' -->
+                
+                ,
+                
+            
+                <a href="https://github.com/">
+                Github
+                </a>
+                <!-- not the last, output a ',' -->
+                
+                ,
+                
+            
+                <a href="https://github.com/zxixia/jekyll-xixia">
+                Xixia
+                </a>
+                <!-- not the last, output a ',' -->
+                
+            
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>
