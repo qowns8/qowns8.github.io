@@ -1,14 +1,14 @@
 ---
 layout: post
 title: 스칼라주석
+categories: 스칼라
+description: 스칼라의 주석에 관한 간단한 이야기
 tags:
 - 스칼라
+- 주석
 ---
 
-
 # 스칼라 주석 가이드
-
-----------------
 
 ## scaladoc
 intelliJ에서 스칼라 주석을 통한 *scalaDocs*을 만드는 기능이 있다.

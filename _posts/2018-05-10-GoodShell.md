@@ -1,8 +1,11 @@
 ---
 layout: post
 title: 멋있는 명령어 모음 (작성중)
+description: 작성중입니다.
+categories: 개발자코스프레 
 tags:
 - 리눅스
+- 간지
 ---
 
 # 멋있는 명령어 모음
