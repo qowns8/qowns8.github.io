@@ -1,12 +1,12 @@
 ---
 layout: post
-title: 코세라-스칼라 후기
+title: coursera scala 후기
 categories: scala
 description: 코세라에서 스칼라를 만든 마틴 오더스티 교수의 2가지 코스강의를 듣고 쓴 후기입니다.
 tags:
 - 잡담
-- 코세라
-- 스칼라
+- coursera
+- scala
 ---
 
 ## 왜 들었나

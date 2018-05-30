@@ -1,10 +1,10 @@
 ---
 layout: post
-title: 스칼라주석
+title: scala 주석
 categories: scala
 description: 스칼라의 주석에 관한 간단한 이야기
 tags:
-- 스칼라
+- scala
 - 주석
 ---
 
