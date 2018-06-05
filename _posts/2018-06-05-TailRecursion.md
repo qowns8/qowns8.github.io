@@ -107,8 +107,8 @@ http://bozeury.tistory.com/entry/%EA%BC%AC%EB%A6%AC-%EC%9E%AC%EA%B7%80-%EC%B5%9C
     // 팩토리얼 구하기
      @tailrec
      def factorial(num: Int)(r: Int): Int = {
-       if(num == 1) r;
-       else factorial(num - 1)(r * num);
+       if(num == 1) r
+       else factorial(num - 1)(r * num)
      }
 
 주의해야 할 점으론 스칼라에서 꼬리재귀 함수는 재귀밖에서 계산되면 안됩니다.
