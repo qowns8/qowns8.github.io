@@ -2,7 +2,7 @@
 layout: post
 title: Scala - 타입의 계보 null 편
 categories: scala
-description: Scala의 Nil, Null, None, Option, Nothing, isEmpty, null 등에 대해 알아봅시다. 
+description: Scala의 Nil, Null, None, Option, Nothing, null 등에 대해 알아봅시다. 
 tags:
 - scala
 - 스칼라
