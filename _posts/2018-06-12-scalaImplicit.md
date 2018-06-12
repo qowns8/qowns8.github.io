@@ -39,19 +39,19 @@ DB에 관한 코딩을 하다 제가 짠 인터페이스 어딘가에서 DB sess
 
 
 
-    trait number
-    case class monoid[A](point: A) extends number
-    def main(args: Array[String]): Unit = {
-  
-      implicit val zdfs = monoid(0)
-      implicit val yfds = monoid(1.11)
-      def printXYZ(x: Int)(implicit y: monoid[Int], z: monoid[Double]): Unit = println(s"${x}, ${y.point}, ${z.point}") // y, z 둘 다 묵시적으로 인자를 받아온다.
-      printXYZ(5) // 결과: 5, 0, 1.11
+        trait number
+        case class monoid[A](point: A) extends number
+        def main(args: Array[String]): Unit = {
       
-      implicit val world = "world"
-      def printS1AndS2(s1: String)(implicit s2: String) = println(s1 + " " + s2)
-      printS1AndS2("hello") // 결과: hello world
-    }
+          implicit val zdfs = monoid(0)
+          implicit val yfds = monoid(1.11)
+          def printXYZ(x: Int)(implicit y: monoid[Int], z: monoid[Double]): Unit = println(s"${x}, ${y.point}, ${z.point}") // y, z 둘 다 묵시적으로 인자를 받아온다.
+          printXYZ(5) // 결과: 5, 0, 1.11
+          
+          implicit val world = "world"
+          def printS1AndS2(s1: String)(implicit s2: String) = println(s1 + " " + s2)
+          printS1AndS2("hello") // 결과: hello world
+        }
 
 두 번째 `implicit`을 호출한 함수는 일반적인 사용법입니다.
 첫 번째 `implicit`을 호출한 함수는 `implicit`을 이용해 제네릭으로 들어오는 타입을 강제했고 인자도 두 개 입니다.
