@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Scala - implicit
+title:  Scala - implicit (암시적 파라미터, 암시적 변환)
 categories: scala
 description:  scala의 독특한 문법 implicit에 대해 알아봅시다.
 tags:
