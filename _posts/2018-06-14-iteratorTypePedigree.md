@@ -6,12 +6,8 @@ description: Scala의 Iterators와 각종 컬랙션에 쓰는 고차 함수들 m
 tags:
 - scala
 - 스칼라
-- 컬랙션
-- Iterator
 - Collections
 - 고차함수
-- flatMap
-- 함수형
 ---
 
 # 서론
