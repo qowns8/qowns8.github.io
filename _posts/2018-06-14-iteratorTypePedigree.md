@@ -211,7 +211,7 @@ list를 정렬하는데 무려 3가지의 방법이 있습니다. 그 차이점�
         }))
         // 결과 List(square(19,1), square(1,1), square(4,5), square(3,6))
 
-### groupBy
+## groupBy
 
 `groupBy`는 인자로 준 함수를 기준으로 묶습니다. mysql의 `groupBy`와 비슷합니다.
 
