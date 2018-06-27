@@ -26,9 +26,9 @@ https://www.scala-lang.org/api/current/scala/collection/immutable/List.html
 
 `List`에도 여러 종류가 있지만 일반적으로 각각의 노드들로 이루어져 있고 노드가 서로 연결된 시퀀스입니다.
 
-    http://www.epnc.co.kr/news/photo/201109/45353_42547_3.jpg
-    
-    출처: http://www.epnc.co.kr/news/articleView.html?idxno=45353
+![LinkedList](http://www.epnc.co.kr/news/photo/201109/45353_42547_3.jpg)
+
+출처: http://www.epnc.co.kr/news/articleView.html?idxno=45353
 
 C를 처음 배울 때 많이 구현하는 자료형으로 배열처럼 많이 사용하지만 다른 것 입니다. 리스트는 배열과 다르게 메모리만 충분하다면 계속 동적으로 노드를 이어 붙일 수 있습니다
 
