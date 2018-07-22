@@ -1,6 +1,6 @@
 ---
 layout: post
-title: performace test tools
+title: performance test tools
 categories: DevOps
 description: 회사 블로그에 쓴 글을 퍼왔습니다. 퍼포먼스 테스트 툴 5개의 설치, 튜토리얼, 간단한 사용후기입니다.
 tags:
