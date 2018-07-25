@@ -155,6 +155,7 @@ gatling 사이트에서 들어가면 다운로드 파일을 받습니다.
 
 gatling 파일에 테스트 스크립트를 작성합니다.
 
+{% highlight scala %}
 
     import io.gatling.core.Predef._
     import io.gatling.http.Predef._
@@ -193,7 +194,7 @@ gatling 파일에 테스트 스크립트를 작성합니다.
       ).protocols(httpConf)
     }
 
-
+{% endhighlight %}
 
 환경변수를 넣어줍니다.
 
