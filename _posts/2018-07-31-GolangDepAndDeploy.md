@@ -6,6 +6,7 @@ description: 최근 공부하는 Go 언어의 의존성 관리와 배포자동�
 tags:
 - DevOps
 - Golang
+- 배포자동화
 ---
 
 # go dep, AWS code pipeline
@@ -85,6 +86,8 @@ src 파일로 이동해 dep의 5개 밖에 없는 명령어 중 init로 환경�
     
 어떤 패키지들을 사용하는지 확인하려면 Gopkg.toml을 확인하면 됩니다.
 
+{% highlight toml %}
+
     Gopkg.toml example
     
     Refer to https://golang.github.io/dep/docs/Gopkg.toml.html
@@ -111,6 +114,8 @@ src 파일로 이동해 dep의 5개 밖에 없는 명령어 중 init로 환경�
       go-tests = true
       unused-packages = true
 
+{% endhighlight %}
+
 로컬에서 환경을 구성하면서 src 파일 밖에서 init를 한다던가, GOPATH를 이상하게 잡하는 실수로
 꽤 많은 시간을 사용했습니다. GOPATH를 현재 프로젝트 경로로 주의해서 잡으면 될 것 같습니다.
 
@@ -129,6 +134,8 @@ github에서 여럿이서 프로젝트를 공유할 수 있게 세팅을 바꾸�
 
 주의할 점으로는 로컬구성과 다르게 로컬 패키지의 import를 수정해줘야 합니다.
 
+{% highlight go %}
+
     import (
     	"./router"
     	"log"
@@ -142,8 +149,12 @@ github에서 여럿이서 프로젝트를 공유할 수 있게 세팅을 바꾸�
     	"../utils"
     	"../models"
     )
+    
+{% endhighlight %}
 
 위의 import를 아래처럼 수정됩니다.
+
+{% highlight go %}
 
     import (
     	"github.com/username/project/router"
@@ -158,6 +169,8 @@ github에서 여럿이서 프로젝트를 공유할 수 있게 세팅을 바꾸�
     	"github.com/username/project/utils"
     	"github.com/username/project/models"
     )
+
+{% endhighlight %}
 
 ---
 
@@ -184,6 +197,8 @@ Elastic Beanstalk은 Ec2, S3, 보안그룹 설정을 쉽게할 수 있는 배포
 
 이 때 Jenkins 와 Aws CodePipeline을 선택할 수 있는데 저는 CodePipeline을 선택하고 프로젝트 루트에 buildspec.yml 을 추가했습니다.
 
+{% highlight yml %}
+
     version: 0.2
     
     phases:
@@ -206,7 +221,9 @@ Elastic Beanstalk은 Ec2, S3, 보안그룹 설정을 쉽게할 수 있는 배포
       files:
         - src/github.com/username/project/bin/application
       discard-paths: yes
-      
+
+{% endhighlight %}   
+
 ---
 
 # 후기
