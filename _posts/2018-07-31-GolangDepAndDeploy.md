@@ -18,7 +18,7 @@ tags:
 * dependency : dep
 * build server : Aws CodeBuild
 * deploy server : Aws Ec2 T2 micro
-* etc : Aws CodePipeline ,Aws Elastic beanstalk , GitHub,  ...
+* etc : Aws CodePipeline, Aws Elastic beanstalk , GitHub,  ...
 
 # 개요
 
