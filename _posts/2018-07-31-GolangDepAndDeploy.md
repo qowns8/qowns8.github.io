@@ -11,6 +11,15 @@ tags:
 
 # go dep, AWS code pipeline
 
+개발 환경 및 사용한 기술
+
+* os : os x
+* lang : Go
+* dependency : dep
+* build server : Aws CodeBuild
+* deploy server : Aws Ec2 T2 micro
+* etc : Aws CodePipeline ,Aws Elastic beanstalk , GitHub,  ...
+
 # 개요
 
 저번 금요일 회사에서 크롤러도 짜고 oAuth도 해보고 GO언어 스터디를 하다가 제이슨이 단순히 코드, 문법 공부는 
