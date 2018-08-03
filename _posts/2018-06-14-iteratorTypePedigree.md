@@ -54,6 +54,8 @@ tags:
 
 예시
 
+{% highlight scala %}
+
         case class Word(w: Any, word_type: String)
         val words = List(
           Word("프란시스 드레이크", "명사"),
@@ -72,6 +74,8 @@ tags:
     
         println(pie) // 결과: List((해적,프란시스 드레이크), (해적,캡틴 쿡), (해적,검은 수염), (), (), ())
 
+{% endhighlight %}
+
 ## flatMap
 
 `flatMap`은 `flatten` + `map` 함수입니다. 한 가지 특이한 점은 `flatMap`, `map`은 `for`문과 동일해서 서로 대체가 가능합니다. 지금 당장 알 필요는 없지만 이는 모나드를 이해하는데 중요한 요소입니다.
@@ -80,16 +84,20 @@ tags:
 
 예시
 
+{% highlight scala %}
+
         val list = List(Some(1), Some("2"), None, Some(4), None)
         val numbers = list.flatMap(item => Some(item.getOrElse("0").toString.toInt))
         println(numbers) // 결과 List(1, 2, 0, 4, 0)
-
+{% endhighlight %}
 
 ## reduceRight
 
 `reduceRight`는 이전과 현재 item으로 된 함수를 받고 한 번 순회 할때 마다 이전의 순회한 item을 버리면서 함수를 호출합니다. 주로 리스트로 된 문자열 집합을 다 더할때 많이 사용합니다.
 
 예시
+
+{% highlight scala %}
 
         val queryStr = List(
           ("id" -> "38"),
@@ -101,11 +109,15 @@ tags:
     
         println(domain + queryStr) // 결과 http://api?id=38&sort=false&type=json
 
+{% endhighlight %}
+
 ## reducetLeft
 
 `reduceLeft`는 `reduceRight`와 똑같지만 순회하는 방향만 정반대로 다릅니다.
 
 예시
+
+{% highlight scala %}
 
         val queryStr = List(
           ("id" -> "38"),
@@ -117,6 +129,34 @@ tags:
     
         println(domain + queryStr) // 결과 http://api?id=38&sort=false&type=json
 
+{% endhighlight %}
+
+## foldLeft, foldRight
+
+초기 값을 인자로 주고 `foldLeft`는 왼쪽부터 `foldRight`는 오른쪽부터 차례로 이전 결과와 현제 순회하는 값을 계산하는 메소드입니다.
+
+다음 예시는 점수 리스트 중 토익 점수만을 합계 내는 예시입니다.
+
+예시
+
+{% highlight scala %}
+        
+        case class score (p_type: String, point: Int)
+        
+        val exam = List(score("토익", 666), score("한국사", 89), score("정보처리기능사", 77), score("토익", 900))
+    
+        val sc = exam.foldLeft(score("토익", 0)) { (now, next) =>
+          next match {
+            case score("토익", _) => score("토익", next.point + now.point)
+            case _ => now
+          }
+        }
+        println(sc)
+        
+        // 결과 score(토익,1566)
+        
+{% endhighlight %}
+
 ## zipWithIndex
 
 `zipWitIndex`는 id값을 붙여줍니다.
@@ -124,8 +164,12 @@ tags:
 다음 예시는 scala 공식 doc에서 가져왔습니다.
     
 예시
+
+{% highlight scala %}
    
     List("a", "b", "c").zipWithIndex = List(("a", 0), ("b", 1), ("c", 2))
+    
+{% endhighlight %}
 
 ## filter
 
@@ -135,6 +179,7 @@ tags:
 
 예시
 
+{% highlight scala %}
 
     case class User(id: Long, name: String, user_type: Int)
 
@@ -150,12 +195,18 @@ tags:
     println(users.filter(_.user_type < 2))
     // 결과 List(User(0,알랙산더,1), User(0,라마누잔,1), User(0,하스켈,1))
 
+{% endhighlight %}
+
 ## filterNot
 
 `filterNot`은 인자로 준 함수에 해당되지 않는 값들을 돌려줍니다.
 
+{% highlight scala %}
+
     println(users.filterNot(_.user_type < 2))
     // 결과 List(User(0,파인만,2), User(0,아인슈타인,3), User(0,뉴턴,3))
+
+{% endhighlight %}
 
 ## 각종 sort 함수
 
@@ -167,6 +218,8 @@ list를 정렬하는데 무려 3가지의 방법이 있습니다. 그 차이점�
 
 예시 
 
+{% highlight scala %}
+
         val needSort1 = List(3, 4, 1, 7)
         val needSort2 = List("ba","ab", "ca", "cb")
         println(needSort1.sorted) //결과 List(1, 3, 4, 7)
@@ -176,6 +229,7 @@ list를 정렬하는데 무려 3가지의 방법이 있습니다. 그 차이점�
         val needSort3 = List(123,"ab", "ca", "cb")
         println(needSort3.sorted) // 결과: error
 
+{% endhighlight %}
     
 ### sortBy
 
@@ -183,6 +237,8 @@ list를 정렬하는데 무려 3가지의 방법이 있습니다. 그 차이점�
 밑의 예시는 사각형 클래스의 넓이로 사각형들을 정렬한 예시입니다.
 
 예시
+
+{% highlight scala %}
 
         case class square(width: Long, height: Long)
         val needSort1 = List(
@@ -195,21 +251,29 @@ list를 정렬하는데 무려 3가지의 방법이 있습니다. 그 차이점�
         //println(needSort1.sorted) error
         println(needSort1.sortBy(s => s.height * s.width)) // 결과 List(square(1,1), square(3,6), square(19,1), square(4,5))
 
+{% endhighlight %}
+
 ### sortWith
 
 `sortWith`는 정렬 기준을 직접 만들 수 있습니다. 인자로 함수를 받는데 인자로 넘겨준 함수 대로 정렬해 줍니다.
 밑의 예시에서는 방금전에 예시로 들은 사각형 리스트를 높이에 따라 오름차순 정렬을 하는 코드입니다.
 
 예시
+
+{% highlight scala %}
     
         println(needSort1.sortWith((s1, s2) => {
           s1.height < s2.height
         }))
         // 결과 List(square(19,1), square(1,1), square(4,5), square(3,6))
 
+{% endhighlight %}
+
 ## groupBy
 
 `groupBy`는 인자로 준 함수를 기준으로 묶습니다. mysql의 `groupBy`와 비슷합니다.
+
+{% highlight scala %}
 
         val weathers = List(
           Map("date" -> "201906012", "local" -> "서울", "weather" -> "맑음"),
@@ -232,6 +296,7 @@ list를 정렬하는데 무려 3가지의 방법이 있습니다. 그 차이점�
              )
         )
 
+{% endhighlight %}
          
 ---
         
