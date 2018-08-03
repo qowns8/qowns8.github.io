@@ -133,7 +133,7 @@ tags:
 
 ## foldLeft, foldRight
 
-초기 값을 인자로 주고 `foldLeft`는 왼쪽부터 `foldRight`는 오른쪽부터 차례로 이전 결과와 현제 순회하는 값을 계산하는 메소드입니다.
+초기 값을 인자로 주고 `foldLeft`는 왼쪽부터 `foldRight`는 오른쪽부터 차례로 이전 결과와 현재 순회하는 값을 계산하는 메소드입니다.
 
 다음 예시는 점수 리스트 중 토익 점수만을 합계 내는 예시입니다.
 
@@ -143,7 +143,10 @@ tags:
         
         case class score (p_type: String, point: Int)
         
-        val exam = List(score("토익", 666), score("한국사", 89), score("정보처리기능사", 77), score("토익", 900))
+        val exam = List(
+         score("토익", 666), score("한국사", 89),
+         score("정보처리기능사", 77), score("토익", 900)
+         )
     
         val sc = exam.foldLeft(score("토익", 0)) { (now, next) =>
           next match {
