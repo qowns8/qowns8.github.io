@@ -29,6 +29,7 @@ DB를 접속 할 때는 주로 리눅스 계열/윈도우 계열로 설치 방�
 
 차례로 추천 해보겠습니다.
 
+
 ### Mysql Workbench
 
 ![워크 밴치](https://dev.mysql.com/doc/workbench/en/images/wb-performance-dashboard.png)
@@ -45,6 +46,7 @@ mysql 공식 사이트에서 받을 수 있는 툴 입니다. 운영체제 상�
 
 - 프로그램이 너무 무겁다.
 
+
 ### Jetbrains DataGrip
 
 ![데이터 그리프](https://res.cloudinary.com/canonical/image/fetch/q_auto,f_auto,w_430/https://dashboard.snapcraft.io/site_media/appmedia/2017/11/1.png)
@@ -53,12 +55,13 @@ mysql 공식 사이트에서 받을 수 있는 툴 입니다. 운영체제 상�
 
 장점
 
-- 자동완성, 믿줄, 자동 줄 맞춤, 플러그인 무슨 말이 더 필요할까...
+- 자동완성, 밑줄, 자동 줄 맞춤, 플러그인 무슨 말이 더 필요할까...
 
 단점
 
 - 굳이 이런걸 쓸까? 싶은 다양한 기능 때문에 복잡해 보임
 - 구매를 고민되는 가격
+
 
 ### PhpMyAdmin
 
@@ -73,6 +76,7 @@ mysql 공식 사이트에서 받을 수 있는 툴 입니다. 운영체제 상�
 단점
 
 - 굳이 이걸...
+
 
 ### HeidiSQL
 
@@ -90,6 +94,7 @@ mysql 공식 사이트에서 받을 수 있는 툴 입니다. 운영체제 상�
 - only window
 - 보기가 않좋음
 
+
 ### Sequel Pro
 
 ![sequel](https://blog.calevans.com/wp-content/uploads/2015/10/Screen-Shot-2015-10-07-at-8.47.32-AM.png)
@@ -103,6 +108,7 @@ mysql 공식 사이트에서 받을 수 있는 툴 입니다. 운영체제 상�
 단점
 
 - 가끔 입력한 쿼리가 많으면 느려짐
+
 
 # 출처
 
